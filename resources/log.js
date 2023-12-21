@@ -1,12 +1,12 @@
 /** 去除参数中的t参数 */
 const removeTParams = (match) => {
-  const url = match.split("?")[0]
+  const url = match.split("?")[ 0 ]
   let newUrl = ""
-  if (url[1]) {
+  if (url[ 1 ]) {
     return url
   }
   const params = match
-    .split("?")[1]
+    .split("?")[ 1 ]
     .split("&")
     .filter((item) => {
       return !item.includes("t=")
@@ -48,15 +48,15 @@ function createNewResponse(oldResponse, responseText) {
         case "useFinalURL":
         case "body":
         case "bodyUsed":
-          return oldResponse[name]
+          return oldResponse[ name ]
       }
-      return target[name]
+      return target[ name ]
     }
   })
 
   for (let key in proxy) {
-    if (typeof proxy[key] === "function") {
-      proxy[key] = proxy[key].bind(tempResponse)
+    if (typeof proxy[ key ] === "function") {
+      proxy[ key ] = proxy[ key ].bind(tempResponse)
     }
   }
   return proxy
@@ -75,7 +75,7 @@ function isMatchedRequest(url) {
     return true
   }
 
-  const domain = url.split("?")[0]
+  const domain = url.split("?")[ 0 ]
   return domain.includes(host)
 }
 
@@ -86,14 +86,14 @@ function convertFormDataToJson(str) {
     const jsonReg2 = /{.*?}/
     const hasJson2 = jsonReg2.test(str)
     if (hasJson2) {
-      const jsonStr = jsonReg2.exec(str)[0]
+      const jsonStr = jsonReg2.exec(str)[ 0 ]
       const newStr = str.replace(jsonReg2, "@")
       return { str: newStr, jsonStr }
     } else {
       return { str }
     }
   } else {
-    const jsonStr = jsonReg1.exec(str)[0].slice(0, -1)
+    const jsonStr = jsonReg1.exec(str)[ 0 ].slice(0, -1)
     const newStr = str.replace(jsonReg1, "@&")
     return { str: newStr, jsonStr }
   }
@@ -146,7 +146,7 @@ function logRequest(request, isFetch = true) {
       `%c${url}`,
       `%c(in ${ellapsed} ms)`
     ]
-    return [parts.join(" "), ...headerCss]
+    return [ parts.join(" "), ...headerCss ]
   }
 
   if (isFetch) {
@@ -157,26 +157,26 @@ function logRequest(request, isFetch = true) {
     const { method } = options
     let requestMethod = method || "GET"
     let params = {}
-    const [requestUrl, paramStr] = url.split("?")
+    const [ requestUrl, paramStr ] = url.split("?")
     if (requestMethod.toLocaleUpperCase() === "GET") {
       if (paramStr) {
         paramStr.split("&").forEach((item) => {
-          const [key, value] = item.split("=")
+          const [ key, value ] = item.split("=")
           let newValue = value
           if (newValue.includes("%7B")) {
             newValue = JSON.parse(decodeURIComponent(value))
           }
-          params[key] = convertToNumber(newValue)
+          params[ key ] = convertToNumber(newValue)
         })
       }
     } else {
       const { body, headers } = options
-      if (headers["Content-Type"] === "application/json") {
+      if (headers[ "Content-Type" ] === "application/json") {
         params = JSON.parse(body)
       } else {
         body.split("&").forEach((item) => {
-          const [key, value] = item.split("=")
-          params[key] = convertToNumber(value)
+          const [ key, value ] = item.split("=")
+          params[ key ] = convertToNumber(value)
         })
       }
     }
@@ -205,20 +205,20 @@ function logRequest(request, isFetch = true) {
     let params = {}
     let url = ""
     if (xhrRequest.responseURL.indexOf(window.location.host) > -1) {
-      url = xhrRequest.responseURL.split(window.location.host)[1]
+      url = xhrRequest.responseURL.split(window.location.host)[ 1 ]
     }
-    const [requestUrl, paramStr] = url.split("?")
+    const [ requestUrl, paramStr ] = url.split("?")
     if (requestMethod.toLocaleUpperCase() === "GET") {
       paramStr &&
         paramStr.split("&").forEach((item) => {
-          const [key, value] = item.split("=")
+          const [ key, value ] = item.split("=")
           let newValue = value
           if (newValue.includes("%7B")) {
             newValue = JSON.parse(decodeURIComponent(value))
           } else {
             newValue = convertToNumber(value)
           }
-          params[key] = newValue
+          params[ key ] = newValue
         })
     } else {
       const { postParams } = xhrRequest
@@ -236,14 +236,14 @@ function logRequest(request, isFetch = true) {
         }
         const replacedString = paramsString.replace(reg, replacer)
         replacedString.split("&").forEach((item) => {
-          const [key, value] = item.split("=")
+          const [ key, value ] = item.split("=")
           const newValue = value.includes("$placeholder")
-            ? replaceList[value.split("-")[1]]?.slice(1)
+            ? replaceList[ value.split("-")[ 1 ] ]?.slice(1)
             : value
           try {
-            params[key] = JSON.parse(newValue)
+            params[ key ] = JSON.parse(newValue)
           } catch {
-            params[key] = newValue
+            params[ key ] = newValue
           }
         })
 
@@ -274,13 +274,13 @@ function init() {
   XMLHttpRequest.prototype.open = function (...args) {
     this.wrappedOpen(...args)
     // get请求send没有参数，post请求有
-    this.method = args[0]
+    this.method = args[ 0 ]
   }
 
   XMLHttpRequest.prototype.send = function (...args) {
     this.wrappedSend(...args)
     // get请求send没有参数，post请求有
-    this.postParams = decodeURIComponent(args[0])
+    this.postParams = decodeURIComponent(args[ 0 ])
   }
   // Override the existing setRequestHeader function so that it stores the headers
   XMLHttpRequest.prototype.setRequestHeader = function (header, value) {
@@ -294,12 +294,12 @@ function init() {
     }
 
     // Create a list for the header that if it does not exist
-    if (!this.headers[header]) {
-      this.headers[header] = []
+    if (!this.headers[ header ]) {
+      this.headers[ header ] = []
     }
 
     // Add the value to the header
-    this.headers[header].push(value)
+    this.headers[ header ].push(value)
   }
 }
 
@@ -377,27 +377,27 @@ const XMA_LOG = {
             modifyResponse()
           }
           const time = new Date().getTime() - startTime
-          logRequest({ xhrRequest: args[0].srcElement, time }, false)
+          logRequest({ xhrRequest: args[ 0 ].srcElement, time }, false)
           this.onload && this.onload.apply(this, args)
         }
         continue
       }
 
-      if (typeof xhr[attr] === "function") {
-        this[attr] = xhr[attr].bind(xhr)
+      if (typeof xhr[ attr ] === "function") {
+        this[ attr ] = xhr[ attr ].bind(xhr)
       } else {
         // responseText和response不是writeable的，但拦截时需要修改它，所以修改就存储在this[`_${attr}`]上
         if (attr === "responseText" || attr === "response") {
           Object.defineProperty(this, attr, {
             get: () =>
-              this[`_${attr}`] == undefined ? xhr[attr] : this[`_${attr}`],
-            set: (val) => (this[`_${attr}`] = val),
+              this[ `_${attr}` ] == undefined ? xhr[ attr ] : this[ `_${attr}` ],
+            set: (val) => (this[ `_${attr}` ] = val),
             enumerable: true
           })
         } else {
           Object.defineProperty(this, attr, {
-            get: () => xhr[attr],
-            set: (val) => (xhr[attr] = val),
+            get: () => xhr[ attr ],
+            set: (val) => (xhr[ attr ] = val),
             enumerable: true
           })
         }
@@ -456,12 +456,29 @@ const XMA_LOG = {
   }
 }
 
-const printLog = true
-if (printLog) {
-  init()
+init()
+
+function openLog() {
   window.XMLHttpRequest = XMA_LOG.myXHR
   window.fetch = XMA_LOG.myFetch
-} else {
+}
+function closeLog() {
   window.XMLHttpRequest = XMA_LOG.originalXHR
   window.fetch = XMA_LOG.originalFetch
 }
+
+window.addEventListener(
+  "message",
+  function (event) {
+    const { sign, data } = event.data
+    if (sign == 'XMA_EXTENSION') {
+      console.log("🚀 xma 🚀 ~ file: log.js:475 ~ sign:", sign, data);
+      if (data.event == 'log_open') {
+        openLog()
+      } else if (data.event == 'log_close') {
+        closeLog()
+      }
+    }
+  },
+  false
+)

@@ -1,6 +1,7 @@
 import { useMount, useSetState } from "ahooks"
 import _ from "lodash"
 
+import { EffectAction } from "~components/EffectAction"
 import Header from "~components/header"
 import Log from "~components/log"
 import { ExtensionContext, InitState } from "~store"
@@ -9,13 +10,12 @@ import { StorageKey } from "~util/constants"
 
 function IndexPopup() {
   const [store, _setStore] = useSetState(InitState)
-
   useMount(() => {
     ChromeStorage.get([StorageKey.STORE]).then((res) => {
       if (_.isEmpty(res)) {
         ChromeStorage.set({ [StorageKey.STORE]: InitState })
       } else {
-        _setStore(res as typeof InitState)
+        _setStore(res.store as unknown as typeof InitState)
       }
     })
   })
@@ -26,6 +26,7 @@ function IndexPopup() {
 
   return (
     <ExtensionContext.Provider value={{ store, setStore }}>
+      <EffectAction />
       <div
         style={{
           display: "flex",
