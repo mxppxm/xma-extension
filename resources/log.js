@@ -238,7 +238,7 @@ function logRequest(request, isFetch = true) {
         replacedString.split("&").forEach((item) => {
           const [key, value] = item.split("=")
           const newValue = value.includes("$placeholder")
-            ? replaceList[value.split("-")[1]].slice(1)
+            ? replaceList[value.split("-")[1]]?.slice(1)
             : value
           try {
             params[key] = JSON.parse(newValue)
@@ -459,7 +459,7 @@ const XMA_LOG = {
 const printLog = true
 if (printLog) {
   init()
-  window.XMLHttpRequest = XMA_LOG.myXHR as any
+  window.XMLHttpRequest = XMA_LOG.myXHR
   window.fetch = XMA_LOG.myFetch
 } else {
   window.XMLHttpRequest = XMA_LOG.originalXHR

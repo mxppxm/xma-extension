@@ -17,6 +17,8 @@ function IndexPopup() {
       <Title title="请求打印" />
       <Log />
       <Title title="请求拦截替换" />
+      <Title title="多语key查询" />
+      <Title title="多语修改" />
     </div>
   )
 }

@@ -5,6 +5,6 @@ export function loadPageScript(url: string) {
   document.documentElement.appendChild(script)
 
   script.addEventListener("load", () => {
-    console.log("🚀 xma 🚀 ~ file: loadPageScript.ts:11 ~ load:")
+    console.log("🚀 xma 🚀 ~ file: loadPageScript.ts:11 ~ load success:", url)
   })
 }

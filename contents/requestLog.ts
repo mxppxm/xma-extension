@@ -21,5 +21,5 @@ export function isValidLogHost() {
 }
 
 if (isValidLogHost()) {
-  loadPageScript("log.ef00d690.js")
+  loadPageScript("resources/log.js")
 }
