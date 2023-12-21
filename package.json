@@ -27,6 +27,19 @@
   "manifest": {
     "host_permissions": [
       "https://*/*"
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "web_accessible_resources": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "resources": [
+          "*"
+        ]
+      }
     ]
   }
 }
