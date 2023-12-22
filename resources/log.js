@@ -471,6 +471,7 @@ window.addEventListener(
   "message",
   function (event) {
     const { sign, data } = event.data
+    console.log("🚀 xma 🚀 ~ file: log.js:474 ~ event.data:", event.data);
     if (sign == 'XMA_EXTENSION') {
       console.log("🚀 xma 🚀 ~ file: log.js:475 ~ sign:", sign, data);
       if (data.event == 'log_open') {

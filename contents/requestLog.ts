@@ -25,9 +25,10 @@ export function isValidLogHost() {
 
 let hasLoad = false
 export function openLog() {
-  console.log("🚀 xma 🚀 ~ file: requestLog.ts:28 ~ openLog:", openLog)
-  console.log("🚀 xma 🚀 ~ file: requestLog.ts:31 ~ hasLoad:", hasLoad)
   if (isValidLogHost()) {
+    chrome.runtime.sendMessage(chrome.runtime.id, {
+      event: MessageEventType.LOG.open
+    })
     if (hasLoad) {
       PostMessage.send({ event: MessageEventType.LOG.open })
     } else {
@@ -42,7 +43,7 @@ export function closeLog() {
   console.log("🚀 xma 🚀 ~ file: requestLog.ts:40 ~ closeLog:")
   PostMessage.send({ event: MessageEventType.LOG.close })
 }
-
+// 第一次触发，之后要通过Chrome.message转发
 ChromeStorage.get([StorageKey.STORE]).then((res: any) => {
   console.log("🚀 xma 🚀 ~ file: requestLog.ts:45 ~ res:", res)
   if (!_.isEmpty(res)) {

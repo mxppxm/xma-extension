@@ -51,3 +51,15 @@ export const PostMessage = {
     window.removeEventListener("message", func)
   }
 }
+
+export const ChromePostMessage = {
+  send: (message: Object) => {
+    chrome.runtime.sendMessage(message)
+  },
+  listen: (callback: (data: any) => void) => {
+    chrome.runtime.onMessage.addListener(callback)
+  },
+  remove: (callback: (data: any) => void) => {
+    chrome.runtime.onMessage.removeListener(callback)
+  }
+}
