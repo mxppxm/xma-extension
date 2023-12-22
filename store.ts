@@ -1,7 +1,9 @@
 import { createContext } from "react"
 
 export const InitState = {
-  isLogOpen: true
+  version: 1, // 新加状态后需要重置storage
+  isLogOpen: false,
+  isEditPageData: false
 }
 export const InitStore = {
   store: InitState,

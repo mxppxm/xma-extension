@@ -1,6 +1,7 @@
 import { useMount, useSetState } from "ahooks"
 import _ from "lodash"
 
+import EditPageData from "~components/editPageData"
 import { EffectAction } from "~components/EffectAction"
 import Header from "~components/header"
 import Log from "~components/log"
@@ -15,7 +16,11 @@ function IndexPopup() {
       if (_.isEmpty(res)) {
         ChromeStorage.set({ [StorageKey.STORE]: InitState })
       } else {
-        _setStore(res.store as unknown as typeof InitState)
+        if (res.store.version !== InitState.version) {
+          ChromeStorage.set({ [StorageKey.STORE]: InitState })
+        } else {
+          _setStore(res.store as unknown as typeof InitState)
+        }
       }
     })
   })
@@ -32,11 +37,12 @@ function IndexPopup() {
           display: "flex",
           flexDirection: "column",
           padding: 16,
-          width: 300
+          width: 600
         }}>
         <Header title="请求打印" />
         <Log />
-        <Header title="请求拦截替换" />
+        <Header title="修改pageData" />
+        <EditPageData />
         <Header title="多语key查询" />
         <Header title="多语修改" />
       </div>

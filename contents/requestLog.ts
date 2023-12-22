@@ -11,29 +11,15 @@ export const config: PlasmoCSConfig = {
   run_at: "document_start"
 }
 
-export function isValidLogHost() {
-  const host = window.location.host
-  if (host.includes("umu.work")) {
-    return false
-  }
-  return (
-    host.includes("umu") ||
-    window.location.host.includes("localhost") ||
-    window.location.host.includes("172")
-  )
-}
-
 let hasLoad = false
 export function openLog() {
-  if (isValidLogHost()) {
-    if (hasLoad) {
+  if (hasLoad) {
+    PostMessage.send({ event: MessageEventType.LOG.open })
+  } else {
+    loadPageScript("resources/log.js").then(() => {
+      hasLoad = true
       PostMessage.send({ event: MessageEventType.LOG.open })
-    } else {
-      loadPageScript("resources/log.js").then(() => {
-        hasLoad = true
-        PostMessage.send({ event: MessageEventType.LOG.open })
-      })
-    }
+    })
   }
 }
 export function closeLog() {
