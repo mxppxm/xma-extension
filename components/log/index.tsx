@@ -7,7 +7,6 @@ const { Title } = Typography
 export default function Log() {
   const { store, setStore } = useContext(ExtensionContext)
   const { isLogOpen } = store
-  console.log("🚀 xma 🚀 ~ file: index.tsx:10 ~ isLogOpen:", isLogOpen)
 
   const onChangeOpen = (checked: boolean) => {
     setStore({ isLogOpen: checked })

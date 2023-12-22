@@ -63,3 +63,17 @@ export const ChromePostMessage = {
     chrome.runtime.onMessage.removeListener(callback)
   }
 }
+
+export const ChromeTabMessage = {
+  send: (message: Object) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, message)
+    })
+  },
+  listen: (callback: (data: any) => void) => {
+    chrome.runtime.onMessage.addListener(callback)
+  },
+  remove: (callback: (data: any) => void) => {
+    chrome.runtime.onMessage.removeListener(callback)
+  }
+}

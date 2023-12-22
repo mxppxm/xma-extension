@@ -26,9 +26,6 @@ export function isValidLogHost() {
 let hasLoad = false
 export function openLog() {
   if (isValidLogHost()) {
-    chrome.runtime.sendMessage(chrome.runtime.id, {
-      event: MessageEventType.LOG.open
-    })
     if (hasLoad) {
       PostMessage.send({ event: MessageEventType.LOG.open })
     } else {
@@ -40,16 +37,25 @@ export function openLog() {
   }
 }
 export function closeLog() {
-  console.log("🚀 xma 🚀 ~ file: requestLog.ts:40 ~ closeLog:")
   PostMessage.send({ event: MessageEventType.LOG.close })
 }
-// 第一次触发，之后要通过Chrome.message转发
-ChromeStorage.get([StorageKey.STORE]).then((res: any) => {
-  console.log("🚀 xma 🚀 ~ file: requestLog.ts:45 ~ res:", res)
-  if (!_.isEmpty(res)) {
-    const { store } = res
-    if (store.isLogOpen) {
-      openLog()
-    }
+
+chrome.runtime.onMessage.addListener((msg) => {
+  if (msg.event === MessageEventType.LOG.open) {
+    openLog()
+  } else if (msg.event === MessageEventType.LOG.close) {
+    closeLog()
   }
 })
+function init() {
+  // 第一次触发，之后要通过Chrome.message转发
+  ChromeStorage.get([StorageKey.STORE]).then((res: any) => {
+    if (!_.isEmpty(res)) {
+      const { store } = res
+      if (store.isLogOpen) {
+        openLog()
+      }
+    }
+  })
+}
+init()

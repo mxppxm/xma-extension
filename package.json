@@ -5,7 +5,7 @@
   "description": "xma's extension",
   "author": "xma",
   "scripts": {
-    "dev": "plasmo dev --no-cache",
+    "dev": "rm -rf build/* && plasmo dev",
     "build": "plasmo build",
     "test": "plasmo test"
   },
@@ -41,7 +41,8 @@
       }
     ],
     "permissions": [
-      "storage"
+      "storage",
+      "tabs"
     ]
   }
 }

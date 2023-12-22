@@ -1,25 +1,19 @@
-import { useMount } from "ahooks"
 import { useContext, useEffect } from "react"
 
-import { closeLog, openLog } from "~contents/requestLog"
 import { ExtensionContext } from "~store"
+import { ChromeTabMessage } from "~util/chrome"
+import { MessageEventType } from "~util/constants"
 
 export function useStoreAction() {
   const { store } = useContext(ExtensionContext)
   const { isLogOpen } = store
-  console.log("🚀 xma 🚀 ~ file: useStoreAction.ts:10 ~ isLogOpen:", isLogOpen)
 
-  useMount(() => {
-    chrome.runtime.onMessage.addListener((message) => {
-      console.log("🚀 xma 🚀 ~ file: useStoreAction.ts:14 ~ message:", message)
-    })
-  })
-
+  // log相关
   useEffect(() => {
     if (isLogOpen) {
-      openLog()
+      ChromeTabMessage.send({ event: MessageEventType.LOG.open })
     } else {
-      closeLog()
+      ChromeTabMessage.send({ event: MessageEventType.LOG.close })
     }
   }, [isLogOpen])
 }
