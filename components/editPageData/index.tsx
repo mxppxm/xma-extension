@@ -6,18 +6,18 @@ import { ExtensionContext } from "~store"
 const { Title } = Typography
 export default function EditPageData() {
   const { store, setStore } = useContext(ExtensionContext)
-  const { isLogOpen } = store
+  const { isEditPageData } = store
 
   const onChangeOpen = (checked: boolean) => {
-    setStore({ isLogOpen: checked })
+    setStore({ isEditPageData: checked })
   }
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <Title heading={6} style={{ margin: 8 }}>
-        {isLogOpen ? "已开启" : "已关闭"}
+        {isEditPageData ? "已开启" : "已关闭"}
       </Title>
       <Switch
-        checked={isLogOpen}
+        checked={isEditPageData}
         onChange={onChangeOpen}
         aria-label="a switch for demo"
       />
