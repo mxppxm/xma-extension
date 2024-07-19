@@ -2,6 +2,7 @@ import { useMount, useSetState } from "ahooks"
 import _ from "lodash"
 import { useEffect } from "react"
 
+import CommitMessageTemplate from "~components/commitMessageTemplate"
 import EditPageData from "~components/editPageData"
 import { EffectAction } from "~components/EffectAction"
 import Header from "~components/header"
@@ -44,6 +45,8 @@ function IndexPopup() {
         }}>
         <Header title="请求打印" />
         <Log />
+        <Header title="提测模版复制" />
+        <CommitMessageTemplate />
         {/* <Header title="修改pageData" />
         <EditPageData />
         <Header title="多语key查询" />
