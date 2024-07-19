@@ -16,7 +16,6 @@ const { Title } = Typography
 export default function CommitMessageTemplate() {
   const [show, setShow] = useState(false)
   const onSubmit = (values: any) => {
-    console.log("🚀 xma 🚀 ~ file: index.tsx:7 ~ values:", values)
     if (_.isEmpty(values)) {
       return
     }
