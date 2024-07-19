@@ -6,7 +6,7 @@ export const InitState = {
   isEditPageData: false
 }
 export const InitStore = {
-  store: InitState,
+  store: { ...InitState },
   setStore: (store: any) => {}
 }
 export const ExtensionContext = createContext(InitStore)

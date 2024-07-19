@@ -1,5 +1,6 @@
 import { useMount, useSetState } from "ahooks"
 import _ from "lodash"
+import { useEffect } from "react"
 
 import EditPageData from "~components/editPageData"
 import { EffectAction } from "~components/EffectAction"
@@ -10,14 +11,14 @@ import { ChromeStorage } from "~util/chrome"
 import { StorageKey } from "~util/constants"
 
 function IndexPopup() {
-  const [store, _setStore] = useSetState(InitState)
+  const [store, _setStore] = useSetState({ ...InitState })
   useMount(() => {
     ChromeStorage.get([StorageKey.STORE]).then((res) => {
       if (_.isEmpty(res)) {
-        ChromeStorage.set({ [StorageKey.STORE]: InitState })
+        ChromeStorage.set({ [StorageKey.STORE]: { ...InitState } })
       } else {
         if (res.store.version !== InitState.version) {
-          ChromeStorage.set({ [StorageKey.STORE]: InitState })
+          ChromeStorage.set({ [StorageKey.STORE]: { ...InitState } })
         } else {
           _setStore(res.store as unknown as typeof InitState)
         }
@@ -26,8 +27,10 @@ function IndexPopup() {
   })
   const setStore: typeof _setStore = (newState) => {
     _setStore(newState)
-    ChromeStorage.set({ [StorageKey.STORE]: newState })
   }
+  useEffect(() => {
+    ChromeStorage.set({ [StorageKey.STORE]: store })
+  }, [store])
 
   return (
     <ExtensionContext.Provider value={{ store, setStore }}>
@@ -41,10 +44,10 @@ function IndexPopup() {
         }}>
         <Header title="请求打印" />
         <Log />
-        <Header title="修改pageData" />
+        {/* <Header title="修改pageData" />
         <EditPageData />
         <Header title="多语key查询" />
-        <Header title="多语修改" />
+        <Header title="多语修改" /> */}
       </div>
     </ExtensionContext.Provider>
   )

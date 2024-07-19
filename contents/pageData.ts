@@ -11,9 +11,9 @@ import { ExtensionMessageKey, MessageEventType } from "~util/constants"
 //   run_at: "document_start"
 // }
 
-chrome.runtime.onMessage.addListener((msg) => {
-  console.log("🚀 xma 🚀 ~ file: pageData.ts:17 ~ msg:", msg)
-})
+// chrome.runtime.onMessage.addListener((msg) => {
+//   console.log("🚀 xma 🚀 ~ file: pageData.ts:17 ~ msg:", msg)
+// })
 function init() {
   loadPageScript("resources/pageData.js")
   PostMessage.listen((event) => {

@@ -37,8 +37,7 @@ function init() {
   // 第一次触发，之后要通过Chrome.message转发
   ChromeStorage.get([StorageKey.STORE]).then((res: any) => {
     if (!_.isEmpty(res)) {
-      const { store } = res
-      if (store.isLogOpen) {
+      if (res.store.isLogOpen) {
         openLog()
       }
     }

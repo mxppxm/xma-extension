@@ -13,7 +13,7 @@
     "@douyinfe/semi-ui": "^2.49.1",
     "ahooks": "^3.7.8",
     "lodash": "^4.17.21",
-    "plasmo": "0.84.0",
+    "plasmo": "0.88.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

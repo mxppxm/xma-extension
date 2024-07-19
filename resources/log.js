@@ -1,6 +1,7 @@
 /** 去除参数中的t参数 */
 const removeTParams = (match) => {
   const url = match.split("?")[ 0 ]
+  console.log("🚀 xma 🚀 ~ file: log.js:4 ~ url:", url);
   let newUrl = ""
   if (url[ 1 ]) {
     return url

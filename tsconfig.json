@@ -8,7 +8,8 @@
     "./**/*.ts",
     "./**/*.tsx",
     "resources/*.ts",
-    "resources/log.js"
+    "resources/log.js",
+    "assets/*"
   ],
   "compilerOptions": {
     "paths": {
